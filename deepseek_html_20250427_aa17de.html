@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于区块链的大闸蟹溯源系统 - 南京农业大学</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #006633;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo-text h1 {
+            font-size: 20px;
+            color: #006633;
+        }
+        
+        .logo-text p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #009944;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #006633;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #009944;
+            color: white;
+        }
+        
+        /* 关于项目 */
+        .about {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 32px;
+            color: #006633;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #006633;
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+        }
+        
+        .about-image {
+            flex: 1;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 技术特点 */
+        .features {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: #006633;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #006633;
+        }
+        
+        /* 系统功能 */
+        .system {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .system-image {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .system-image img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 团队成员 */
+        .team {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .team-member {
+            background-color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 5px solid #f5f5f5;
+        }
+        
+        .team-member h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #006633;
+        }
+        
+        .team-member p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        /* 联系我们 */
+        .contact {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .contact-content {
+            display: flex;
+            gap: 50px;
+            margin-top: 50px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #006633;
+        }
+        
+        .contact-info p {
+            margin-bottom: 15px;
+        }
+        
+        .contact-form {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #006633;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            padding: 0 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h2 {
+                font-size: 32px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-content {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-column {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="D:\Onedrive\文档\SRT\c8fe9743-6eb6-4d65-9839-834ac77ad7df\南京农业大学常用视觉元素\校徽和中英文标准全称规范（上下）.jpg" alt="南京农业大学logo">
+                    <div class="logo-text">
+                        <h1>基于区块链的大闸蟹溯源系统</h1>
+                        <p>南京农业大学信息管理学院</p>
+                    </div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">项目介绍</a></li>
+                    <li><a href="#features">技术特点</a></li>
+                    <li><a href="#system">系统功能</a></li>
+                    <li><a href="#team">团队成员</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2>基于区块链的大闸蟹溯源技术及信息系统</h2>
+                <p>利用区块链技术的不可篡改性和透明性，为大闸蟹的生产、流通、销售等环节提供全程可追溯的解决方案，保障食品安全，提升品牌价值。</p>
+                <a href="#about" class="btn">了解更多</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于项目 -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>项目介绍</h2>
+                <p>本项目由南京农业大学信息管理学院团队开发，旨在解决大闸蟹产业中的真伪鉴别和质量追溯问题。</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>关于我们的项目</h3>
+                    <p>随着消费水平的提升，大闸蟹作为高端水产品受到市场追捧，但同时也面临着假冒伪劣、以次充好等问题。据统计，市面上99%的"阳澄湖大闸蟹"实际上是假冒产品。</p>
+                    <p>本项目基于区块链技术构建大闸蟹全生命周期溯源系统，实现从养殖、加工、运输到销售各环节的数据上链，确保信息透明、不可篡改。通过物联网技术实时采集养殖环境数据，结合智能合约自动执行数据上链流程，为消费者提供可信的产品溯源服务。</p>
+                    <p>系统已获得软件著作权(V1.0)，并在江苏阳澄湖等大闸蟹主产区完成初步试点，验证了区块链技术在提升产品可信度、降低售后纠纷中的实际效果。</p>
+                </div>
+                <div class="about-image">
+                    <img src="D:\Pictures\溯源系统网站\微信图片_20240507155032.jpg" alt="大闸蟹养殖">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术特点 -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>技术特点</h2>
+                <p>我们采用前沿技术构建了一个安全、透明、高效的大闸蟹溯源系统</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>区块链技术</h3>
+                    <p>利用区块链的分布式账本和共识机制，确保所有溯源数据不可篡改、全程可追溯，解决传统防伪技术依赖包装标签的局限性。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>物联网集成</h3>
+                    <p>在养殖基地部署传感器节点，实时采集水质、温度等环境数据并同步至区块链，强化源头信息可信度。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>智能合约</h3>
+                    <p>通过智能合约自动执行数据上链流程，减少人工干预，提升效率并降低操作风险，实现全流程自动化管理。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>数据分析</h3>
+                    <p>集成多维度数据报表和分析工具，为养殖户、经销商和监管部门提供决策支持，优化供应链管理。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>权限管理</h3>
+                    <p>完善的账户权限体系，支持多角色协同操作，确保数据安全的同时实现业务流程的高效运转。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>可扩展性</h3>
+                    <p>系统架构设计灵活，可轻松扩展至其他农产品溯源领域，为农业供应链数字化转型提供通用解决方案。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 系统功能 -->
+    <section class="system" id="system">
+        <div class="container">
+            <div class="section-title">
+                <h2>系统功能</h2>
+                <p>我们的系统提供全方位的溯源和管理功能</p>
+            </div>
+            <div class="system-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="系统界面">
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>质量检测</h3>
+                    <p>支持样品信息录入、检测结果上链，提供完整的质量检测报告，确保每一只大闸蟹的品质和安全。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>溯源查询</h3>
+                    <p>消费者通过扫描商品溯源码，即可查看大闸蟹的养殖环境、物流路径等全流程信息，验证产品真伪。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>权限管理</h3>
+                    <p>通过角色管理、账户分级控制(如管理员、子账户)保障系统数据安全，支持数据回收站机制，增强容错能力。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>数据统计</h3>
+                    <p>集成多维度数据报表(如检测数量、质量评价、时间分布)，为企业和监管部门提供决策支持。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队成员 -->
+    <section class="team" id="team">
+        <div class="container">
+            <div class="section-title">
+                <h2>团队成员</h2>
+                <p>来自南京农业大学信息管理学院的优秀团队</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="张莹">
+                    <h3>张莹</h3>
+                    <p>项目负责人</p>
+                    <p>物流222班</p>
+                    <p>负责项目整体规划与协调</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="张晶晶">
+                    <h3>张晶晶</h3>
+                    <p>核心成员</p>
+                    <p>物流222班</p>
+                    <p>负责创新点与项目特色</p>
+                </div>
+                <div class="team-member">
+		    <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="汪晗">
+                    <h3>汪晗</h3>
+                    <p>核心成员</p>
+                    <p>物流222班</p>
+                    <p>负责项目书生产或运营、投融资方案</p>
+                </div>
+		<div class="team-member">
+		    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="尹竹风">
+                    <h3>尹竹风</h3>
+                    <p>核心成员</p>
+                    <p>物流221班</p>
+                    <p>负责项目书行业及市场前景模块</p>
+                </div>
+
+
+
+                    <img src="https://randomuser.me
